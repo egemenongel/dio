@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+
 import '../adapter.dart';
-import '../options.dart';
 import '../dio_error.dart';
+import '../options.dart';
 import '../redirect_record.dart';
 
 typedef OnHttpClientCreate = HttpClient? Function(HttpClient client);
@@ -54,7 +55,7 @@ class DefaultHttpClientAdapter implements HttpClientAdapter {
 
       //Set Headers
       options.headers.forEach((k, v) {
-        if (v != null) request.headers.set(k, '$v');
+        request.headers.set(k, v ?? "null", preserveHeaderCase: true);
       });
     } on SocketException catch (e) {
       if (e.message.contains('timed out')) {
